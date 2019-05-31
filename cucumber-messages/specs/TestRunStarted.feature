@@ -2,9 +2,9 @@ Feature: Sending TestRunStarted messages
 
   Scenario Outline: Starting test suite sends a message (independent of feature file exist)
 
-    Given there are <NumberOfFeatureFiles> feature files
+    Given there are '<NumberOfFeatureFiles>' feature files
     When the test suite is executed
-    Then <NumberOfTestRunStartedMessages> TestRunStarted messages have been sent
+    Then '<NumberOfTestRunStartedMessages>' TestRunStarted messages have been sent
 
     Examples:
       | Case                              | NumberOfFeatureFiles | NumberOfTestRunStartedMessages |
