@@ -2,9 +2,9 @@ Feature: Sending TestCaseStarted Messages
 
   Scenario Outline: Starting test cases sends a message per test case
 
-    Given there are <NumberOfScenarios> scenarios
+    Given there are '<NumberOfScenarios>' scenarios
     When the test suite is executed
-    Then <NumberOfTestCaseStartedMessages> TestCaseStarted messages have been sent
+    Then '<NumberOfTestCaseStartedMessages>' TestCaseStarted messages have been sent
 
     Examples:
       | Case             | NumberOfScenarios | NumberOfTestCaseStartedMessages |
