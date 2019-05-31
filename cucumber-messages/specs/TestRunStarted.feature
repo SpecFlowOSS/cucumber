@@ -4,12 +4,12 @@ Feature: Sending TestRunStarted messages
 
     Given there are <NumberOfFeatureFiles> feature files
     When the test suite is executed
-    Then a TestRunStarted message has been sent
+    Then <NumberOfTestRunStartedMessages> TestRunStarted messages have been sent
 
     Examples:
-      | Case                              | NumberOfFeatureFiles |
-      | empty test suite                  | 0                    |
-      | test suite contains feature files | 1                    |
+      | Case                              | NumberOfFeatureFiles | NumberOfTestRunStartedMessages |
+      | empty test suite                  | 0                    | 0                              |
+      | test suite contains feature files | 1                    | 1                              |
 
   @SpecFlow
   Scenario: Parallel test runs can send multiple messages
