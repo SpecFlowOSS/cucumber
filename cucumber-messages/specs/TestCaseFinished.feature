@@ -24,6 +24,6 @@ Feature: Sending TestCaseFinished Messages
 
         Given there is a scenario with PickleId 'ff981b6f-b11e-4149-baa1-9794940ac8bf'
         When the scenario is executed
-        Then a TestCaseStarted message has been sent with the following attributes
+        Then a TestCaseFinished message has been sent with the following attributes
             | Attribute | Value                                |
             | pickleId  | ff981b6f-b11e-4149-baa1-9794940ac8bf |
