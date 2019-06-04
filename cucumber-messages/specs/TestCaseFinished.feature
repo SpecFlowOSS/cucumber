@@ -30,3 +30,12 @@ Feature: Sending TestCaseFinished Messages
         Then a TestCaseFinished message has been sent with the following attributes
             | Attribute | Value                                |
             | pickleId  | ff981b6f-b11e-4149-baa1-9794940ac8bf |
+
+    Scenario: Successful test case result is included in the message
+        Given there is a scenario
+        And all steps are bound and pass
+        When the test suite is executed
+        Then a TestCaseFinished message has been sent with the following TestResult
+            | Attribute | Value             |
+            | status    | <ExpectedStatus>  |
+
