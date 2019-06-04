@@ -36,6 +36,6 @@ Feature: Sending TestCaseFinished Messages
         And all steps are bound and pass
         When the test suite is executed
         Then a TestCaseFinished message has been sent with the following TestResult
-            | Attribute | Value             |
-            | status    | <ExpectedStatus>  |
+            | Attribute | Value  |
+            | status    | Passed |
 
