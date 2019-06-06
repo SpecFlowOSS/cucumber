@@ -46,3 +46,11 @@ Feature: Sending TestCaseFinished Messages
         Then a TestCaseFinished message has been sent with the following TestResult
             | Attribute | Value  |
             | status    | Failed |
+
+    Scenario: Pending test case result is included in the message
+        Given there is a scenario
+        And all steps are bound and are pending
+        When the test suite is executed
+        Then a TestCaseFinished message has been sent with the following TestResult
+            | Attribute | Value  |
+            | status    | Pending |
