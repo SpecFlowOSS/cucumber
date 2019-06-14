@@ -13,60 +13,30 @@ Feature: Sending TestCaseFinished Messages
             | Single scenario  | 1                 | 1                                |
             | Two scenarios    | 2                 | 2                                |
 
-    Scenario: Test case end time is included in the message
-
-        Given there is a scenario
-        And all steps are bound and pass
-        When the scenario is finished at '2019-05-13 13:09:46'
-        Then a TestCaseFinished message has been sent with the following attributes
-            | Attribute | Value                 |
-            | timestamp | '2019-05-13 13:09:46' |
-
-    Scenario: Test case PickleId is included in the message
+    Scenario: Test case end time and PickleId is included in the message
 
         Given there is a scenario with PickleId 'ff981b6f-b11e-4149-baa1-9794940ac8bf'
         And all steps are bound and pass
-        When the scenario is executed
+        When the scenario is finished at '2019-05-13 13:09:46'
         Then a TestCaseFinished message has been sent with the following attributes
             | Attribute | Value                                |
+            | timestamp | '2019-05-13 13:09:46'                |
             | pickleId  | ff981b6f-b11e-4149-baa1-9794940ac8bf |
 
-    Scenario: Successful test case result is included in the message
-        Given there is a scenario
-        And all steps are bound and pass
-        When the test suite is executed
-        Then a TestCaseFinished message has been sent with the following TestResult
-            | Attribute | Value  |
-            | status    | Passed |
+    Scenario Outline: TestCase Result depends on binding and execution result
 
-    Scenario: Failed test case result is included in the message
-        Given there is a scenario
-        And all steps are bound and fail
-        When the test suite is executed
-        Then a TestCaseFinished message has been sent with the following TestResult
-            | Attribute | Value  |
-            | status    | Failed |
+        Given there is a scenario with the following steps: 'Step1'
+        And with step definitions in the following order: '<bindings and step result>'
 
-    Scenario: Pending test case result is included in the message
-        Given there is a scenario
-        And all steps are bound and are pending
         When the test suite is executed
         Then a TestCaseFinished message has been sent with the following TestResult
-            | Attribute | Value   |
-            | status    | Pending |
+            | Attribute | Value             |
+            | status    | <Scenario Status> |
 
-    Scenario: Ambiguous test case result is included in the message
-        Given there is a scenario
-        And there are two step definitions with identical bindings
-        When the test suite is executed
-        Then a TestCaseFinished message has been sent with the following TestResult
-            | Attribute | Value     |
-            | status    | Ambiguous |
-
-    Scenario: Undefined test case result is included in the message
-        Given there is a scenario
-        And there are no matching step definitions
-        When the test suite is executed
-        Then a TestCaseFinished message has been sent with the following TestResult
-            | Attribute | Value     |
-            | status    | Undefined |
+        Examples:
+            | Description                                  | bindings and step result                 | Scenario Status |
+            | one passing step definition                  | Step1Binding (pass)                      | Passed          |
+            | one failing step definition                  | Step1Binding (fail)                      | Failed          |
+            | one pending step definition                  | Step1Binding (pending)                   | Pending         |
+            | no step definition                           |                                          | Undefined       |
+            | two step definitions with identical bindings | Step1Binding (pass), Step1Binding (pass) | Ambiguous       |
