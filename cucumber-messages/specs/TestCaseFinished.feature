@@ -49,22 +49,3 @@ Feature: Sending TestCaseFinished Messages
             | one pending step definition                  | Step1Binding (pending)                   | Pending         |
             | no step definition                           |                                          | Undefined       |
             | two step definitions with identical bindings | Step1Binding (pass), Step1Binding (pass) | Ambiguous       |
-
-    Scenario Outline: TestCaseFinished message with status Skipped is send, if the scenario is ignored
-
-        Given there is an ignored scenario with the following steps: 'Step1'
-        And with step definitions in the following order: '<bindings and step result>'
-
-        When the test suite is executed
-        
-        Then a TestCaseFinished message has been sent with the following TestResult
-            | Attribute | Value             |
-            | status    | Skipped           |
-
-        Examples:
-            | Description                                  | bindings and step result                 |
-            | one passing step definition                  | Step1Binding (pass)                      |
-            | one failing step definition                  | Step1Binding (fail)                      |
-            | one pending step definition                  | Step1Binding (pending)                   |
-            | no step definition                           |                                          |
-            | two step definitions with identical bindings | Step1Binding (pass), Step1Binding (pass) |
